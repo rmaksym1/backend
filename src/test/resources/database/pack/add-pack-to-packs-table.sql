@@ -1,0 +1,1 @@
+INSERT INTO packs (id, title, description, price_per_day, image_url, is_deleted) VALUES (5, 'Example pack', 'Example pack description', 5.99, 'https://example.jpg', false);
