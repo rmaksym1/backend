@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -18,6 +19,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Getter
 @Setter
 @Table(name = "packs")
+@Accessors(chain = true)
 public class RentalPack {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
