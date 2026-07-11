@@ -1,11 +1,12 @@
 package com.origin.backend.controller;
 
-import com.origin.backend.dto.WeatherResponseDto;
+import com.origin.backend.dto.weather.WeatherResponseDto;
 import com.origin.backend.service.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,8 @@ public class WeatherController {
     @GetMapping
     @Operation(summary = "Get weather & info by date")
     public ResponseEntity<WeatherResponseDto> getWeather(
-            @RequestParam(name = "date", required = false) LocalDate date
+            @RequestParam(name = "date", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return ResponseEntity.ok(weatherService.getWeatherForDate(date));
     }

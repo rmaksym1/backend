@@ -1,4 +1,4 @@
-package com.origin.backend.dto;
+package com.origin.backend.dto.weather;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,10 +1,11 @@
 package com.origin.backend.service.impl;
 
-import com.origin.backend.dto.WeatherResponseDto;
+import com.origin.backend.dto.weather.WeatherResponseDto;
 import com.origin.backend.service.WeatherService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,6 +19,10 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     public WeatherResponseDto getWeatherForDate(LocalDate localDate) {
+        if (localDate == null) {
+            localDate = LocalDate.now();
+        }
+
         JsonNode response = fetchWeather(localDate);
         JsonNode hourly = response.path("hourly");
 
@@ -94,10 +99,10 @@ public class WeatherServiceImpl implements WeatherService {
                 date, date
         );
 
-        return webClient.get()
+        return Objects.requireNonNull(webClient.get()
                 .uri(url)
                 .retrieve()
                 .bodyToMono(JsonNode.class)
-                .block();
+                .block());
     }
 }
