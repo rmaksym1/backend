@@ -22,7 +22,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Accessors(chain = true)
 public class RentalPack {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
