@@ -1,1 +1,2 @@
+DELETE FROM bookings
 DELETE FROM packs
