@@ -31,6 +31,8 @@ public class RentalPack {
 
     private BigDecimal pricePerDay;
 
+    private BigDecimal instructorHourlyPrice;
+
     private String imageUrl;
 
     @Column(name = "is_deleted")

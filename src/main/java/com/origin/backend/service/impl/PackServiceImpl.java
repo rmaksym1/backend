@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class PackServiceImpl implements PackService {
     private final PackRepository packRepository;
     private final PackMapper packMapper;
 
+    @Transactional
     @Override
     public PackResponseDto createPack(CreatePackRequestDto dto) {
         RentalPack rentalPack = packMapper.toModel(dto);
@@ -48,6 +50,7 @@ public class PackServiceImpl implements PackService {
         return packMapper.toDto(packRepository.save(pack));
     }
 
+    @Transactional
     @Override
     public void deletePackById(Long id) {
         RentalPack pack = findPackByIdOrThrow(id);

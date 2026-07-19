@@ -1,4 +1,13 @@
 package com.origin.backend.dto.booking;
 
-public record BookingResponse(// TODO
+import java.math.BigDecimal;
+
+public record BookingResponse(
+        Long id,
+        String fullName,
+        String email,
+        String phoneNumber,
+        Integer instructorHours,
+        Long packId,
+        BigDecimal totalPrice
 ) {}
