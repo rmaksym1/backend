@@ -83,7 +83,6 @@ public class WeatherServiceImpl implements WeatherService {
         // returning weather response
         return WeatherResponseDto.builder()
                 .date(localDate)
-                .title(status)
                 .waterTemperature(finalWaterTemp)
                 .bestTime(bestTime)
                 .status(status)

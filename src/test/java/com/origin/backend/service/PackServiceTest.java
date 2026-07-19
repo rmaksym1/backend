@@ -111,6 +111,7 @@ class PackServiceTest {
 
         when(packRepository.findById(id)).thenReturn(Optional.of(pack));
         doNothing().when(packMapper).updatePack(updateDto, pack);
+        when(packRepository.save(pack)).thenReturn(pack);
         when(packMapper.toDto(pack)).thenReturn(responseDto);
 
         PackResponseDto result = packService.updatePackById(id, updateDto);

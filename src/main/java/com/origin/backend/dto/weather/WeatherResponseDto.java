@@ -7,7 +7,6 @@ import lombok.Builder;
 @Builder
 public record WeatherResponseDto(
         LocalDate date,
-        String title,
         double waterTemperature,
         String bestTime,
         String status,

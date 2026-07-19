@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -27,6 +28,15 @@ public class GlobalExceptionHandler {
 
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
                 "An unexpected error occured"
+        );
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(
+            MethodArgumentTypeMismatchException ex
+    ) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST,
+                ex.getMessage()
         );
     }
 

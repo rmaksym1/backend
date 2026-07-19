@@ -45,7 +45,7 @@ public class PackServiceImpl implements PackService {
 
         packMapper.updatePack(updatePackRequestDto, pack);
 
-        return packMapper.toDto(pack);
+        return packMapper.toDto(packRepository.save(pack));
     }
 
     @Override
