@@ -7,5 +7,6 @@ public record PackResponseDto(
         String title,
         String description,
         BigDecimal pricePerDay,
-        String imageUrl
+        String imageUrl,
+        BigDecimal instructorHourlyPrice
 ) {}
