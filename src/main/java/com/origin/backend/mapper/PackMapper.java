@@ -15,6 +15,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface PackMapper {
     PackResponseDto toDto(RentalPack rentalPack);
 
+    @Mapping(target = "id", ignore = true)
     RentalPack toModel(CreatePackRequestDto createPackRequestDto);
 
     @Mapping(target = "id", ignore = true)
