@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-packs-table
+      id: create-bookings-table
       author: rmaksym1
       changes:
         - createTable:
-            tableName: packs
+            tableName: bookings
             columns:
               - column:
                   name: id
@@ -15,29 +15,34 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
-                  name: title
+                  name: full_name
                   type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: description
-                  type: varchar(1024)
-              - column:
-                  name: price_per_day
-                  type: decimal(10,2)
+                  name: email
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: instructor_hourly_price
+                  name: phone_number
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: instructor_hours
+                  type: int
+                  defaultValue: 0
+              - column:
+                  name: rental_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_bookings_rentals
+                    referencedTableName: rentals
+                    referencedColumnNames: id
+              - column:
+                  name: total_price
                   type: decimal(10, 2)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: image_url
-                  type: varchar(512)
-              - column:
-                  name: is_deleted
-                  type: boolean
-                  defaultValueBoolean: false
                   constraints:
                     nullable: false
