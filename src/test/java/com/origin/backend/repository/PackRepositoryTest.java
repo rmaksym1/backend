@@ -6,7 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
@@ -22,6 +24,9 @@ class PackRepositoryTest {
 
     @Autowired
     private PackRepository packRepository;
+
+    @MockitoBean
+    private CacheManager cacheManager;
 
     @Test
     @DisplayName("Should successfully save and find pack by ID")

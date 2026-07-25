@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -27,6 +28,9 @@ class WeatherControllerTest {
     @MockitoBean
     private WeatherService weatherService;
 
+    @MockitoBean
+    private CacheManager cacheManager;
+
     @Test
     @DisplayName("GET /weather - Success with explicit date")
     void getWeather_WithValidDate_ReturnsOkAndDto() throws Exception {
@@ -41,7 +45,7 @@ class WeatherControllerTest {
 
         Mockito.when(weatherService.getWeatherForDate(explicitDate)).thenReturn(mockResponse);
 
-        mockMvc.perform(get("/weather")
+        mockMvc.perform(get("/weather/daily")
                         .param("date", "2026-07-11")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -63,7 +67,7 @@ class WeatherControllerTest {
 
         Mockito.when(weatherService.getWeatherForDate(Mockito.any())).thenReturn(mockResponse);
 
-        mockMvc.perform(get("/weather")
+        mockMvc.perform(get("/weather/daily")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.date").value(today.toString()))
