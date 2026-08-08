@@ -1,14 +1,21 @@
 package com.origin.backend.model;
 
+import com.origin.backend.model.enums.BookingStatus;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -27,19 +34,34 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private String bookingId;
+
+    @Column(nullable = false)
+    private LocalDate rentalDate;
+
+    private LocalTime issuanceTime;
+
+    @Column(nullable = false)
     private String fullName;
 
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String phoneNumber;
 
-    private Integer instructorHours;
+    @JoinColumn(name = "booking_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Participant> participants;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pack_id", nullable = false)
-    private RentalPack rentalPack;
-
+    @Column(nullable = false)
     private BigDecimal totalPrice;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 32)
+    private BookingStatus status;
+
+    @Column(nullable = false)
     private boolean isDeleted;
 }
