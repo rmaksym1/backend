@@ -7,12 +7,10 @@ import com.origin.backend.model.Booking;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, uses = {ParticipantMapper.class})
 public interface BookingMapper {
-    @Mapping(source = "rentalPack.id", target = "packId")
     BookingResponse toDto(Booking booking);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "rentalPack", ignore = true)
     Booking toModel(CreateBookingRequest request);
 }

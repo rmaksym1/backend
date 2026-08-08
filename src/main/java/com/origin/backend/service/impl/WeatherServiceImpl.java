@@ -1,7 +1,7 @@
 package com.origin.backend.service.impl;
 
-import com.origin.backend.dto.weather.DailyWeatherResponseDto;
-import com.origin.backend.dto.weather.WeatherResponseDto;
+import com.origin.backend.dto.weather.DailyWeatherResponse;
+import com.origin.backend.dto.weather.WeatherResponse;
 import com.origin.backend.service.WeatherService;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -20,13 +20,15 @@ import tools.jackson.databind.JsonNode;
 @RequiredArgsConstructor
 public class WeatherServiceImpl implements WeatherService {
 
+    public static final double GOOD_WAVES_HEIGHT = 0.7;
+    public static final double HUGE_SWELL_HEIGHT = 1.5;
     private final WebClient webClient;
 
     @Override
     @Cacheable(value = "weather_daily",
             key = "#localDate != null ? #localDate : T(java.time.LocalDate).now()"
     )
-    public WeatherResponseDto getWeatherForDate(LocalDate localDate) {
+    public WeatherResponse getWeatherForDate(LocalDate localDate) {
         if (localDate == null) {
             localDate = LocalDate.now();
         }
@@ -79,7 +81,7 @@ public class WeatherServiceImpl implements WeatherService {
         String bestTime = String.format("%02d:00 - %02d:00", bestHour, (bestHour + 3) % 24);
 
         // returning weather response
-        return WeatherResponseDto.builder()
+        return WeatherResponse.builder()
                 .date(localDate)
                 .waterTemperature(finalWaterTemp)
                 .bestTime(bestTime)
@@ -90,7 +92,7 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Cacheable(value = "weather_range", key = "#from.toString() + '_' + #to.toString()")
-    public List<DailyWeatherResponseDto> getWeatherByDatesBetween(LocalDate from, LocalDate to) {
+    public List<DailyWeatherResponse> getWeatherByDatesBetween(LocalDate from, LocalDate to) {
         checkDates(from, to);
 
         if (from.isAfter(to)) {
@@ -101,7 +103,7 @@ public class WeatherServiceImpl implements WeatherService {
 
         long days = ChronoUnit.DAYS.between(from, to) + 1;
 
-        List<DailyWeatherResponseDto> result = new ArrayList<>();
+        List<DailyWeatherResponse> result = new ArrayList<>();
         JsonNode response = fetchWeather(from, to);
         JsonNode hourly = response.path("hourly");
 
@@ -143,7 +145,7 @@ public class WeatherServiceImpl implements WeatherService {
 
             WaveInfo waveInfo = getStatusAndDescriptionByWaveHeight(maxWaveHeight);
 
-            result.add(new DailyWeatherResponseDto(currentDay,
+            result.add(new DailyWeatherResponse(currentDay,
                     waveInfo.status,
                     waveInfo.description));
 
@@ -180,9 +182,9 @@ public class WeatherServiceImpl implements WeatherService {
     private record WaveInfo(String status, String description) {}
 
     private WaveInfo getStatusAndDescriptionByWaveHeight(double maxWaveHeight) {
-        if (maxWaveHeight > 1.5) {
+        if (maxWaveHeight > HUGE_SWELL_HEIGHT) {
             return new WaveInfo("Huge Swell", "Pro surfers only");
-        } else if (maxWaveHeight > 0.7) {
+        } else if (maxWaveHeight > GOOD_WAVES_HEIGHT) {
             return new WaveInfo("Good Waves", "Perfect for everyone");
         } else {
             return new WaveInfo("Calm water", "Good for beginners");

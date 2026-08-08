@@ -2,6 +2,7 @@ package com.origin.backend.service;
 
 import com.origin.backend.dto.booking.BookingResponse;
 import com.origin.backend.dto.booking.CreateBookingRequest;
+import com.origin.backend.dto.booking.UpdateBookingStatusRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,4 +14,6 @@ public interface BookingService {
     Page<BookingResponse> getAllBookings(Pageable pageable);
 
     void deleteBookingById(Long id);
+
+    BookingResponse updateBookingStatus(Long id, UpdateBookingStatusRequest request);
 }
