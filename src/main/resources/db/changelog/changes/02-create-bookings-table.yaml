@@ -15,6 +15,19 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
+                  name: booking_id
+                  type: varchar(64)
+              - column:
+                  name: rental_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: issuance_time
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
                   name: full_name
                   type: varchar(255)
                   constraints:
@@ -30,19 +43,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: instructor_hours
-                  type: int
-                  defaultValue: 0
-              - column:
-                  name: rental_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-                    foreignKeyName: fk_bookings_rentals
-                    referencedTableName: rentals
-                    referencedColumnNames: id
-              - column:
                   name: total_price
                   type: decimal(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(32)
                   constraints:
                     nullable: false
