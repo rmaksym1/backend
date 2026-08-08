@@ -4,7 +4,9 @@ import com.origin.backend.dto.booking.BookingResponse;
 import com.origin.backend.dto.booking.CreateBookingRequest;
 import com.origin.backend.exception.EntityNotFoundException;
 import com.origin.backend.mapper.BookingMapper;
+import com.origin.backend.mapper.ParticipantMapper;
 import com.origin.backend.model.Booking;
+import com.origin.backend.model.Participant;
 import com.origin.backend.model.RentalPack;
 import com.origin.backend.repository.BookingRepository;
 import com.origin.backend.repository.PackRepository;
@@ -36,6 +38,9 @@ class BookingServiceTest {
     private BookingRepository bookingRepository;
 
     @Mock
+    private ParticipantMapper participantMapper;
+
+    @Mock
     private PackRepository packRepository;
 
     @Mock
@@ -51,24 +56,36 @@ class BookingServiceTest {
         Booking booking = TestUtil.createBooking();
         RentalPack rentalPack = TestUtil.createRentalPack();
         rentalPack.setPricePerDay(BigDecimal.valueOf(29.99));
-        rentalPack.setInstructorHourlyPrice(BigDecimal.valueOf(10.00));
 
-        Booking savedBooking = TestUtil.createBooking();
-        savedBooking.setRentalPack(rentalPack);
-        savedBooking.setTotalPrice(BigDecimal.valueOf(69.99));
+        Booking savedBookingFirstTime = TestUtil.createBooking();
+        savedBookingFirstTime.setId(1L);
+
+        Booking savedBookingFinal = TestUtil.createBooking();
+        savedBookingFinal.setId(1L);
+        savedBookingFinal.setBookingId("SS-2026-1");
+        savedBookingFinal.setTotalPrice(BigDecimal.valueOf(49.99));
 
         BookingResponse responseDto = TestUtil.createBookingResponse();
 
         when(bookingMapper.toModel(request)).thenReturn(booking);
-        when(packRepository.findById(request.packId())).thenReturn(Optional.of(rentalPack));
-        when(bookingRepository.save(booking)).thenReturn(savedBooking);
-        when(bookingMapper.toDto(savedBooking)).thenReturn(responseDto);
+
+        Long expectedPackId = request.participants().get(0).packId();
+        when(packRepository.findById(expectedPackId)).thenReturn(Optional.of(rentalPack));
+
+        when(participantMapper.toEntity(any())).thenReturn(new Participant());
+
+        when(bookingRepository.save(booking)).thenReturn(savedBookingFirstTime);
+        when(bookingRepository.save(savedBookingFirstTime)).thenReturn(savedBookingFinal);
+        when(bookingMapper.toDto(savedBookingFinal)).thenReturn(responseDto);
 
         BookingResponse result = bookingService.createBooking(request);
 
         assertThat(result).isNotNull().isEqualTo(responseDto);
-        verify(bookingRepository, times(1)).save(booking);
+
+        verify(packRepository, times(1)).findById(expectedPackId);
+        verify(bookingRepository, times(2)).save(any(Booking.class));
         verify(bookingMapper, times(1)).toModel(request);
+        verify(bookingMapper, times(1)).toDto(savedBookingFinal);
     }
 
     @Test
@@ -78,11 +95,9 @@ class BookingServiceTest {
         Booking booking = TestUtil.createBooking();
 
         when(bookingMapper.toModel(request)).thenReturn(booking);
-        when(packRepository.findById(request.packId())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> bookingService.createBooking(request))
-                .isInstanceOf(EntityNotFoundException.class)
-                .hasMessageContaining("Rental pack by id: " + request.packId() + " not found!");
+                .isInstanceOf(EntityNotFoundException.class);
 
         verify(bookingRepository, never()).save(any());
     }

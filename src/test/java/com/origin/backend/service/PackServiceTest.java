@@ -1,8 +1,8 @@
 package com.origin.backend.service;
 
-import com.origin.backend.dto.pack.CreatePackRequestDto;
-import com.origin.backend.dto.pack.PackResponseDto;
-import com.origin.backend.dto.pack.UpdatePackRequestDto;
+import com.origin.backend.dto.pack.CreatePackRequest;
+import com.origin.backend.dto.pack.PackResponse;
+import com.origin.backend.dto.pack.UpdatePackRequest;
 import com.origin.backend.exception.EntityNotFoundException;
 import com.origin.backend.mapper.PackMapper;
 import com.origin.backend.model.RentalPack;
@@ -41,16 +41,16 @@ class PackServiceTest {
     @Test
     @DisplayName("Create pack - Success")
     void createPack_ValidDto_ReturnsResponseDto() {
-        CreatePackRequestDto requestDto = TestUtil.createPackRequestDto();
+        CreatePackRequest requestDto = TestUtil.createPackRequestDto();
         RentalPack model = TestUtil.createRentalPack();
         RentalPack savedModel = TestUtil.createRentalPack();
-        PackResponseDto responseDto = TestUtil.createPackResponseDto();
+        PackResponse responseDto = TestUtil.createPackResponseDto();
 
         when(packMapper.toModel(requestDto)).thenReturn(model);
         when(packRepository.save(model)).thenReturn(savedModel);
         when(packMapper.toDto(savedModel)).thenReturn(responseDto);
 
-        PackResponseDto result = packService.createPack(requestDto);
+        PackResponse result = packService.createPack(requestDto);
 
         assertThat(result).isNotNull().isEqualTo(responseDto);
         verify(packRepository, times(1)).save(model);
@@ -61,12 +61,12 @@ class PackServiceTest {
     void getPackById_ExistingId_ReturnsResponseDto() {
         Long id = 1L;
         RentalPack pack = TestUtil.createRentalPack();
-        PackResponseDto responseDto = TestUtil.createPackResponseDto();
+        PackResponse responseDto = TestUtil.createPackResponseDto();
 
         when(packRepository.findById(id)).thenReturn(Optional.of(pack));
         when(packMapper.toDto(pack)).thenReturn(responseDto);
 
-        PackResponseDto result = packService.getPackById(id);
+        PackResponse result = packService.getPackById(id);
 
         assertThat(result).isNotNull().isEqualTo(responseDto);
     }
@@ -90,12 +90,12 @@ class PackServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
         RentalPack pack = TestUtil.createRentalPack();
         Page<RentalPack> packPage = new PageImpl<>(List.of(pack));
-        PackResponseDto responseDto = TestUtil.createPackResponseDto();
+        PackResponse responseDto = TestUtil.createPackResponseDto();
 
         when(packRepository.findAll(pageable)).thenReturn(packPage);
         when(packMapper.toDto(pack)).thenReturn(responseDto);
 
-        Page<PackResponseDto> result = packService.getAllPacks(pageable);
+        Page<PackResponse> result = packService.getAllPacks(pageable);
 
         assertThat(result).isNotNull().hasSize(1);
         assertThat(result.getContent().getFirst()).isEqualTo(responseDto);
@@ -105,16 +105,16 @@ class PackServiceTest {
     @DisplayName("Update pack by ID - Success")
     void updatePackById_ExistingId_ReturnsUpdatedDto() {
         Long id = 1L;
-        UpdatePackRequestDto updateDto = TestUtil.createUpdatePackRequestDto();
+        UpdatePackRequest updateDto = TestUtil.createUpdatePackRequestDto();
         RentalPack pack = TestUtil.createRentalPack();
-        PackResponseDto responseDto = TestUtil.createPackResponseDto();
+        PackResponse responseDto = TestUtil.createPackResponseDto();
 
         when(packRepository.findById(id)).thenReturn(Optional.of(pack));
         doNothing().when(packMapper).updatePack(updateDto, pack);
         when(packRepository.save(pack)).thenReturn(pack);
         when(packMapper.toDto(pack)).thenReturn(responseDto);
 
-        PackResponseDto result = packService.updatePackById(id, updateDto);
+        PackResponse result = packService.updatePackById(id, updateDto);
 
         assertThat(result).isNotNull().isEqualTo(responseDto);
         verify(packMapper, times(1)).updatePack(updateDto, pack);
