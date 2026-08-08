@@ -1,13 +1,20 @@
 package com.origin.backend.dto.booking;
 
+import com.origin.backend.dto.participant.ParticipantResponse;
+import com.origin.backend.model.enums.BookingStatus;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 public record BookingResponse(
         Long id,
-        String fullName,
+        String bookingId,
+        LocalDate rentalDate,
+        LocalTime issuanceTime,
         String email,
         String phoneNumber,
-        Integer instructorHours,
-        Long packId,
-        BigDecimal totalPrice
+        List<ParticipantResponse> participants,
+        BigDecimal totalPrice,
+        BookingStatus status
 ) {}

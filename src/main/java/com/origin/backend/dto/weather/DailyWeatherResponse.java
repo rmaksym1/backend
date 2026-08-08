@@ -2,7 +2,7 @@ package com.origin.backend.dto.weather;
 
 import java.time.LocalDate;
 
-public record DailyWeatherResponseDto(
+public record DailyWeatherResponse(
         LocalDate date,
         String status,
         String description

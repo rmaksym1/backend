@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Builder;
 
 @Builder
-public record WeatherResponseDto(
+public record WeatherResponse(
         LocalDate date,
         double waterTemperature,
         String bestTime,
