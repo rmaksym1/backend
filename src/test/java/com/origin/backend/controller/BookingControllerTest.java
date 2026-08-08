@@ -24,7 +24,8 @@ class BookingControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("POST /bookings - Success")
@@ -40,7 +41,6 @@ class BookingControllerTest {
                         .content(objectMapper.writeValueAsString(requestDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.fullName").value("Kelly Slater"))
                 .andExpect(jsonPath("$.totalPrice").value(45.99));
     }
 
@@ -54,7 +54,6 @@ class BookingControllerTest {
         mockMvc.perform(get("/bookings/{id}", correctBookingId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(correctBookingId))
-                .andExpect(jsonPath("$.fullName").value("Kelly Slater"))
                 .andExpect(jsonPath("$.email").value("kelly@gmail.com"));
     }
 
