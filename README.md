@@ -33,6 +33,7 @@ SPRING_LOCAL_PORT=8088
 SPRING_DOCKER_PORT=8080
 
 DEBUG_PORT=1200
+FRONTEND_URL=123
 ```
 ### 3. Run Infrastructure (PostgreSQL)
 Ensure you have Docker installed, then run:
