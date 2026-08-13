@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-payments-table
+      author: rmaksym1
+      changes:
+        - createTable:
+            tableName: payments
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: idempotency_key
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: booking_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_bookings_payments
+                    references: bookings(id)
+              - column:
+                  name: status
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: card_last_four
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: card_holder_full_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: billing_country
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
