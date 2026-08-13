@@ -5,6 +5,6 @@ import com.origin.backend.model.enums.PaymentStatus;
 
 public record PaymentResponse(
         Long paymentId,
-        BookingResponse bookingResponse,
+        BookingResponse booking,
         PaymentStatus status
 ) {}

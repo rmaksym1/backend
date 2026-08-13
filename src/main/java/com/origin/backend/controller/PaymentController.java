@@ -4,6 +4,7 @@ import com.origin.backend.dto.payment.CreatePaymentRequest;
 import com.origin.backend.dto.payment.PaymentResponse;
 import com.origin.backend.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class PaymentController {
     @PostMapping
     @Operation(summary = "Endpoint for creating a payment")
     public PaymentResponse createPayment(
+            @Parameter(
+                    description = "Idempotency key for preventing request duplication",
+                    required = true,
+                    example = "123e4567-e89b-12d3-a456-426614174000"
+            )
             @RequestHeader("Idempotency-Key") UUID idempotencyKey,
             @Valid @RequestBody CreatePaymentRequest paymentRequest
     ) {

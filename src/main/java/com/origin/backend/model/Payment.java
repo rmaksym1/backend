@@ -3,6 +3,8 @@ package com.origin.backend.model;
 import com.origin.backend.model.enums.PaymentStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,7 +36,8 @@ public class Payment {
     @JoinColumn(nullable = false)
     private Booking booking;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 32)
     private PaymentStatus status;
 
     @Column(nullable = false)
