@@ -25,6 +25,12 @@ public class GlobalExceptionHandler {
                 ex.getMessage());
     }
 
+    @ExceptionHandler(PaymentFailedException.class)
+    public ResponseEntity<Object> handlePaymentFailedException(PaymentFailedException ex) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND,
+                ex.getMessage());
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> handleHttpMessageNotReadableException(
             HttpMessageNotReadableException ex
