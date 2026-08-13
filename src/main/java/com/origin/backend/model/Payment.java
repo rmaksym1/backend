@@ -1,17 +1,19 @@
 package com.origin.backend.model;
 
 import com.origin.backend.model.enums.PaymentStatus;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @Setter
@@ -22,7 +24,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Booking booking;
 
     private PaymentStatus status;
@@ -30,7 +32,7 @@ public class Payment {
     private BigDecimal amount;
 
     @Column(name = "card_last_four")
-    private Integer cardLastFour;
+    private String cardLastFour;
 
     @Column(name = "card_holder_full_name")
     private String cardHolderFullName;
@@ -39,5 +41,6 @@ public class Payment {
     private String billingCountry;
 
     @Column(name = "created_at")
-    private String createdAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }
