@@ -16,6 +16,7 @@ databaseChangeLog:
                     unique: true
               - column:
                   name: idempotency_key
+                  type: uuid
                   constraints:
                     nullable: false
                     unique: true
