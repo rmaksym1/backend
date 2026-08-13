@@ -2,6 +2,7 @@ package com.origin.backend.controller;
 
 import com.origin.backend.dto.payment.CreatePaymentRequest;
 import com.origin.backend.dto.payment.PaymentResponse;
+import com.origin.backend.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 public class PaymentController {
+    private final PaymentService paymentService;
 
     @PostMapping
     @Operation(summary = "Endpoint for creating a payment")
@@ -30,18 +32,18 @@ public class PaymentController {
             @RequestHeader("Idempotency-Key") UUID idempotencyKey,
             @Valid @RequestBody CreatePaymentRequest paymentRequest
     ) {
-        return null;
+        return paymentService.createPayment(paymentRequest, idempotencyKey);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Endpoint for getting a payment by id")
     public PaymentResponse getPaymentById(@PathVariable Long id) {
-        return null;
+        return paymentService.getPaymentById(id);
     }
 
     @GetMapping()
     @Operation(summary = "Endpoint for getting payments by pageable")
     public Page<PaymentResponse> getPaymentsByPageable(Pageable pageable) {
-        return null;
+        return paymentService.getPaymentsByPageable(pageable);
     }
 }
