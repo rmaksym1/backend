@@ -12,6 +12,7 @@ public record BookingResponse(
         String bookingId,
         LocalDate rentalDate,
         LocalTime issuanceTime,
+        String fullName,
         String email,
         String phoneNumber,
         List<ParticipantResponse> participants,
