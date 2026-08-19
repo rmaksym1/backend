@@ -2,6 +2,7 @@ package com.origin.backend.dto.booking;
 
 import com.origin.backend.dto.participant.ParticipantRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,5 +31,6 @@ public record CreateBookingRequest(
         @NotBlank(message = "Phone number cannot be blank!")
         String phoneNumber,
         @NotNull(message = "Participant list cannot be null!")
+        @Valid
         List<ParticipantRequest> participants
 ) {}

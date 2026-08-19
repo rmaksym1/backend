@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record ParticipantRequest(
-        @NotEmpty(message = "Participant name cannot be null!")
         String name,
         @NotNull(message = "Pack id cannot be null!")
         Long packId,
