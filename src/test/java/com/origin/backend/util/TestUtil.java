@@ -54,6 +54,6 @@ public class TestUtil {
     }
 
     public static BookingResponse createBookingResponse() {
-        return new BookingResponse(4L, "Kelly Slater", LocalDate.now(), LocalTime.now(), "kelly@gmail.com", "+1-202-555-0123", List.of(new ParticipantResponse(4L, "Kelly", 4L, 2)), BigDecimal.valueOf(125), BookingStatus.PENDING);
+        return new BookingResponse(4L, "Kelly Slater", LocalDate.now(), LocalTime.now(), "Kelly Slater", "kelly@gmail.com", "+1-202-555-0123", List.of(new ParticipantResponse(4L, "Kelly", 4L, 2)), BigDecimal.valueOf(125), BookingStatus.PENDING);
     }
 }
