@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,9 +52,8 @@ public class Booking {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @JoinColumn(name = "booking_id")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Participant> participants;
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Participant> participants = new ArrayList<>();
 
     @Column(nullable = false)
     private BigDecimal totalPrice;

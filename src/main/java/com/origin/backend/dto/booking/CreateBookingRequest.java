@@ -31,6 +31,5 @@ public record CreateBookingRequest(
         @NotBlank(message = "Phone number cannot be blank!")
         String phoneNumber,
         @NotNull(message = "Participant list cannot be null!")
-        @Valid
-        List<ParticipantRequest> participants
+        List<@Valid ParticipantRequest> participants
 ) {}

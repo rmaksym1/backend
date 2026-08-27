@@ -24,11 +24,11 @@ public class Participant {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_pack_id")
+    @JoinColumn(name = "rental_pack_id", nullable = false)
     private RentalPack pack;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booking_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
     private Integer instructorHours;
