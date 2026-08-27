@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -31,5 +33,6 @@ public record CreateBookingRequest(
         @NotBlank(message = "Phone number cannot be blank!")
         String phoneNumber,
         @NotNull(message = "Participant list cannot be null!")
+        @Size(min = 1, max = 10, message = "Number of participants must be between 1 and 10!")
         List<@Valid ParticipantRequest> participants
 ) {}
