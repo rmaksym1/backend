@@ -1,6 +1,6 @@
 package com.origin.backend.service;
 
-import com.origin.backend.dto.weather.WeatherResponseDto;
+import com.origin.backend.dto.weather.WeatherResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import com.origin.backend.service.impl.WeatherServiceImpl;
@@ -54,7 +54,7 @@ class WeatherServiceTest {
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setBody(mockJsonResponse));
 
-        WeatherResponseDto result = weatherService.getWeatherForDate(testDate);
+        WeatherResponse result = weatherService.getWeatherForDate(testDate);
 
         assertNotNull(result);
         assertEquals(testDate, result.date());

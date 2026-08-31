@@ -2,7 +2,7 @@ package com.origin.backend.dto.pack;
 
 import java.math.BigDecimal;
 
-public record PackResponseDto(
+public record PackResponse(
         Long id,
         String title,
         String description,

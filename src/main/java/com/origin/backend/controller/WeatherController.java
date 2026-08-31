@@ -1,7 +1,7 @@
 package com.origin.backend.controller;
 
-import com.origin.backend.dto.weather.DailyWeatherResponseDto;
-import com.origin.backend.dto.weather.WeatherResponseDto;
+import com.origin.backend.dto.weather.DailyWeatherResponse;
+import com.origin.backend.dto.weather.WeatherResponse;
 import com.origin.backend.service.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +24,7 @@ public class WeatherController {
 
     @GetMapping("/daily")
     @Operation(summary = "Get weather & info by date")
-    public ResponseEntity<WeatherResponseDto> getWeather(
+    public ResponseEntity<WeatherResponse> getWeather(
             @RequestParam(name = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
@@ -33,7 +33,7 @@ public class WeatherController {
 
     @GetMapping("/range")
     @Operation(summary = "Get info for days between two dates")
-    public ResponseEntity<List<DailyWeatherResponseDto>> getSwellInfoBetweenTwoDates(
+    public ResponseEntity<List<DailyWeatherResponse>> getSwellInfoBetweenTwoDates(
             @RequestParam(name = "from")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam(name = "to")

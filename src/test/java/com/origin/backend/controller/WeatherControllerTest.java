@@ -1,6 +1,6 @@
 package com.origin.backend.controller;
 
-import com.origin.backend.dto.weather.WeatherResponseDto;
+import com.origin.backend.dto.weather.WeatherResponse;
 import com.origin.backend.service.WeatherService;
 import java.time.LocalDate;
 import java.util.List;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,7 +35,7 @@ class WeatherControllerTest {
     void getWeather_WithValidDate_ReturnsOkAndDto() throws Exception {
         LocalDate explicitDate = LocalDate.of(2026, 7, 11);
 
-        WeatherResponseDto mockResponse = WeatherResponseDto.builder()
+        WeatherResponse mockResponse = WeatherResponse.builder()
                 .date(explicitDate)
                 .status("Good Waves")
                 .waterTemperature(20)
@@ -59,7 +58,7 @@ class WeatherControllerTest {
     void getWeather_WithoutDate_DefaultsToTodayAndReturnsOk() throws Exception {
         LocalDate today = LocalDate.now();
 
-        WeatherResponseDto mockResponse = WeatherResponseDto.builder()
+        WeatherResponse mockResponse = WeatherResponse.builder()
                 .date(today)
                 .status("Calm water")
                 .waterTemperature(18)

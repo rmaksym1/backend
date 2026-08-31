@@ -1,8 +1,8 @@
 package com.origin.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.origin.backend.dto.pack.CreatePackRequestDto;
-import com.origin.backend.dto.pack.UpdatePackRequestDto;
+import com.origin.backend.dto.pack.CreatePackRequest;
+import com.origin.backend.dto.pack.UpdatePackRequest;
 import com.origin.backend.util.TestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -33,7 +32,7 @@ class PackControllerTest {
     @Sql(scripts = "/database/cleanup-db.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void createPack_ValidDto_ReturnsCreatedPack() throws Exception {
-        CreatePackRequestDto requestDto = TestUtil.createPackRequestDto();
+        CreatePackRequest requestDto = TestUtil.createPackRequestDto();
 
         mockMvc.perform(post("/packs")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -90,7 +89,7 @@ class PackControllerTest {
     @Sql(scripts = "/database/pack/add-pack-to-packs-table.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void updatePackById_ValidDto_ReturnsUpdatedPack() throws Exception {
-        UpdatePackRequestDto updateDto = TestUtil.createUpdatePackRequestDto();
+        UpdatePackRequest updateDto = TestUtil.createUpdatePackRequestDto();
 
         mockMvc.perform(patch("/packs/{id}", correctPackId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -106,7 +105,7 @@ class PackControllerTest {
     @Sql(scripts = "/database/pack/add-pack-to-packs-table.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     void updatePackByInvalidId_ValidDto_ReturnsNotFound() throws Exception {
-        UpdatePackRequestDto updateDto = TestUtil.createUpdatePackRequestDto();
+        UpdatePackRequest updateDto = TestUtil.createUpdatePackRequestDto();
 
         mockMvc.perform(patch("/packs/{id}", incorrectPackId)
                         .contentType(MediaType.APPLICATION_JSON)

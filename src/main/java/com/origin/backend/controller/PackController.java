@@ -1,8 +1,8 @@
 package com.origin.backend.controller;
 
-import com.origin.backend.dto.pack.CreatePackRequestDto;
-import com.origin.backend.dto.pack.PackResponseDto;
-import com.origin.backend.dto.pack.UpdatePackRequestDto;
+import com.origin.backend.dto.pack.CreatePackRequest;
+import com.origin.backend.dto.pack.PackResponse;
+import com.origin.backend.dto.pack.UpdatePackRequest;
 import com.origin.backend.service.PackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,27 +29,27 @@ public class PackController {
 
     @PostMapping
     @Operation(summary = "Endpoint for creating a pack")
-    public PackResponseDto createPack(@RequestBody @Valid CreatePackRequestDto dto) {
+    public PackResponse createPack(@RequestBody @Valid CreatePackRequest dto) {
         return packService.createPack(dto);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Endpoint for getting a pack by id")
-    public PackResponseDto getPackById(@PathVariable Long id) {
+    public PackResponse getPackById(@PathVariable Long id) {
         return packService.getPackById(id);
     }
 
     @GetMapping
     @Operation(summary = "Endpoint for getting all packs by params")
-    public Page<PackResponseDto> getAllPacks(Pageable pageable) {
+    public Page<PackResponse> getAllPacks(Pageable pageable) {
         return packService.getAllPacks(pageable);
     }
 
     @PatchMapping("/{id}")
     @Operation(summary = "Endpoint for updating a pack by id")
-    public PackResponseDto updatePackById(
+    public PackResponse updatePackById(
             @PathVariable Long id,
-            @RequestBody @Valid UpdatePackRequestDto updatePackRequestDto
+            @RequestBody @Valid UpdatePackRequest updatePackRequestDto
     ) {
         return packService.updatePackById(id, updatePackRequestDto);
     }

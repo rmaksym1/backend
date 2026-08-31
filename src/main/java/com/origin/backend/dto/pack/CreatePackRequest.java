@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 
-public record UpdatePackRequestDto(
+public record CreatePackRequest(
         @NotBlank(message = "Title cannot be blank!")
         @Size(message = "Title must be between 1 and 255 characters long!", min = 1, max = 255)
         String title,
@@ -17,4 +17,4 @@ public record UpdatePackRequestDto(
         BigDecimal pricePerDay,
         @Size(message = "Image url must be not more than 512 characters long!", max = 512)
         String imageUrl
-) {}
+) { }
