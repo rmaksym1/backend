@@ -3,6 +3,8 @@ package com.origin.backend.dto.payment;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.YearMonth;
 
 public record CreatePaymentRequest(
@@ -15,9 +17,11 @@ public record CreatePaymentRequest(
                         + "Must be in format: 'XXXX XXXX XXXX XXXX'")
         String cardNumber,
         @NotBlank(message = "Full name cannot be blank!")
+        @Size(max = 255, message = "Full name cannot exceed 255 characters!")
         String fullName,
         @NotNull(message = "Expiry date cannot be null!")
         YearMonth expiryDate,
         @NotBlank(message = "Billing country cannot be blank!")
+        @Size(max = 255, message = "Billing country cannot exceed 255 characters!")
         String billingCountry
 ) {}

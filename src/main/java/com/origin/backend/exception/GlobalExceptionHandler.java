@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PaymentFailedException.class)
     public ResponseEntity<Object> handlePaymentFailedException(PaymentFailedException ex) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND,
+        return buildErrorResponse(HttpStatus.BAD_REQUEST,
                 ex.getMessage());
     }
 
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleHttpMessageNotReadableException(
             HttpMessageNotReadableException ex
     ) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND,
+        return buildErrorResponse(HttpStatus.BAD_REQUEST,
                 ex.getMessage());
     }
 

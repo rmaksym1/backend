@@ -14,6 +14,7 @@ import java.util.List;
 
 public record CreateBookingRequest(
         @NotBlank(message = "Full name cannot be blank!")
+        @Size(max = 255, message = "Full name cannot exceed 255 characters!")
         String fullName,
         @NotNull(message = "Rental date cannot be null!")
         LocalDate rentalDate,
@@ -22,6 +23,7 @@ public record CreateBookingRequest(
         LocalTime issuanceTime,
         @Email(message = "Email should be valid!")
         @NotBlank(message = "Email cannot be blank!")
+        @Size(max = 255, message = "Email cannot exceed 255 characters!")
         String email,
         @Schema(
                 description = "Customer phone number",
@@ -30,6 +32,7 @@ public record CreateBookingRequest(
         @Pattern(regexp = "^\\+?(?:\\d[ \\-\\(\\)]*){7,15}\\d$",
                 message = "Phone number must be valid!")
         @NotBlank(message = "Phone number cannot be blank!")
+        @Size(max = 255, message = "Phone number cannot exceed 255 characters!")
         String phoneNumber,
         @NotNull(message = "Participant list cannot be null!")
         @Size(min = 1, max = 10, message = "Number of participants must be between 1 and 10!")
