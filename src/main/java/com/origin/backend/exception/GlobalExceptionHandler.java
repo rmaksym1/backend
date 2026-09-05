@@ -10,10 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -74,6 +76,24 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Object> handleResponseStatusException(
             ResponseStatusException ex
+    ) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST,
+                ex.getMessage()
+        );
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<Object> handleNoResourceFoundException(
+            NoResourceFoundException ex
+    ) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND,
+                ex.getMessage()
+        );
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<Object> handleMissingRequestHeaderException(
+            MissingRequestHeaderException ex
     ) {
         return buildErrorResponse(HttpStatus.BAD_REQUEST,
                 ex.getMessage()
