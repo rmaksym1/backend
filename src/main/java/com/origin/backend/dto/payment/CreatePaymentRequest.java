@@ -1,0 +1,26 @@
+package com.origin.backend.dto.payment;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import java.time.YearMonth;
+
+public record CreatePaymentRequest(
+        @NotNull(message = "Booking id cannot be null!")
+        Long bookingId,
+        @NotBlank(message = "Card number cannot be blank!")
+        @Pattern(
+                regexp = "^\\b\\d{4}[ -]\\d{4}[ -]\\d{4}[ -]\\d{4}\\b$",
+                message = "Card number is not valid! "
+                        + "Must be in format: 'XXXX XXXX XXXX XXXX'")
+        String cardNumber,
+        @NotBlank(message = "Full name cannot be blank!")
+        @Size(max = 255, message = "Full name cannot exceed 255 characters!")
+        String fullName,
+        @NotNull(message = "Expiry date cannot be null!")
+        YearMonth expiryDate,
+        @NotBlank(message = "Billing country cannot be blank!")
+        @Size(max = 255, message = "Billing country cannot exceed 255 characters!")
+        String billingCountry
+) {}

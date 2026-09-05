@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-bookings-table
+      id: create-payments-table
       author: rmaksym1
       changes:
         - createTable:
-            tableName: bookings
+            tableName: payments
             columns:
               - column:
                   name: id
@@ -15,46 +15,45 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
+                  name: idempotency_key
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
                   name: booking_id
-                  type: varchar(64)
-              - column:
-                  name: rental_date
-                  type: date
+                  type: bigint
                   constraints:
                     nullable: false
-              - column:
-                  name: issuance_time
-                  type: time
-                  constraints:
-                    nullable: false
-              - column:
-                  name: full_name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: phone_number
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: total_price
-                  type: decimal(10, 2)
-                  constraints:
-                    nullable: false
+                    foreignKeyName: fk_bookings_payments
+                    references: bookings(id)
               - column:
                   name: status
                   type: varchar(32)
                   constraints:
                     nullable: false
               - column:
-                  name: is_deleted
-                  type: boolean
-                  defaultValue: false
+                  name: amount
+                  type: decimal(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: card_last_four
+                  type: varchar(4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: card_holder_full_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: billing_country
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: datetime
                   constraints:
                     nullable: false
