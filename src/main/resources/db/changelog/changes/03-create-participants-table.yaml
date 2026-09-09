@@ -18,7 +18,7 @@ databaseChangeLog:
                   name: name
                   type: varchar(255)
               - column:
-                  name: pack_id
+                  name: rental_pack_id
                   type: bigint
                   constraints:
                     nullable: false
