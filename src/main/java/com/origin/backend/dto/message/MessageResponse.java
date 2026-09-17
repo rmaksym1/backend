@@ -1,4 +1,10 @@
 package com.origin.backend.dto.message;
 
-public record MessageResponse() { // TODO - SWELLCHAT MESSAGE RESPONSE DTO
-}
+import java.time.LocalDateTime;
+
+public record MessageResponse(
+        Long id,
+        String sender,
+        String content,
+        LocalDateTime timestamp
+) {}
